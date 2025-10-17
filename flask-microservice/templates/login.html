@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login para API de Libros</title>
+    <style>
+        body { font-family: sans-serif; max-width: 500px; margin: auto; padding: 20px; }
+        input { width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; }
+        button { padding: 10px 15px; width: 100%; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #response { margin-top: 20px; word-wrap: break-word; background: #f0f0f0; padding: 10px; border-radius: 5px; color: red; }
+    </style>
+</head>
+<body>
+    <h1>Iniciar Sesión</h1>
+    <form id="loginForm">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username" value="testuser" required>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" required>
+        <button type="submit">Obtener Token y Ver Libros</button>
+    </form>
+
+    <pre id="response"></pre>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const newTab = window.open('', '_blank');
+            newTab.document.write('<h1>Cargando libros...</h1>');
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const responseElement = document.getElementById('response');
+            responseElement.textContent = '';
+
+            try {
+                // Obtener el token
+                const loginResponse = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const loginData = await loginResponse.json();
+                if (!loginResponse.ok) throw new Error(loginData.message);
+                const token = loginData.token;
+
+                // Usar el token para pedir los libros
+                const booksResponse = await fetch('/books', {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!booksResponse.ok) throw new Error('No se pudo acceder a los libros.');
+                const booksXml = await booksResponse.text();
+
+                // --- ESTA ES LA NUEVA LÓGICA ---
+                // 1. Crea un "archivo virtual" (Blob) con el XML recibido.
+                const blob = new Blob([booksXml], { type: 'application/xml' });
+
+                // 2. Crea una URL única y segura para ese archivo virtual.
+                const url = URL.createObjectURL(blob);
+
+                // 3. Navega la nueva pestaña a esa URL segura.
+                newTab.location.href = url;
+                // --------------------------------
+
+            } catch (error) {
+                // Si algo falla, cierra la pestaña y muestra el error.
+                newTab.close();
+                responseElement.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
