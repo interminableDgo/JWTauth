@@ -1,5 +1,0 @@
-Flask
-Flask-JWT-Extended
-Werkzeug
-Flask-Cors
-PyMySQL
