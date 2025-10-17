@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente JWT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Cliente JWT</h1>
+    <form id="login-form">
+        <input type="text" id="username" placeholder="Usuario" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button type="submit">Iniciar Sesión</button>
+    </form>
+    <button id="register-btn">Registrar Usuario</button>
+    <button id="refresh-btn">Refrescar Token</button>
+    <button id="profile-btn">Acceder a Perfil</button>
+    
+    <pre id="tokens" style="white-space:pre-wrap;background:#f6f6f6;padding:8px;margin-top:8px"></pre>
+    <button id="save-config-btn">Guardar Configuración</button>
+    <div id="logs"></div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+Ejercicio Guiado
+En este ejercicio se desarrollará un microservicio en Flask que utiliza JWT (JSON Web Token)
+para autenticar usuarios contra una base de datos. El microservicio deberá permitir registrar
+usuarios, iniciar sesión, generar tokens JWT y proteger rutas que solo se puedan acceder con un
+token válido.
+Además, se deberá construir una aplicación web (HTML, CSS, JS) separada que consuma el
+microservicio desde otra máquina, almacenando el token y enviándolo en las cabeceras de las
+solicitudes en un endpoint protegido, agregar a el microservicio de Libros. Incluir un botón que al
+pulsarlo nos de un una ventana emergente y utilizado localstorage almacene la ip, puerto,
+microservicios y endpoints. Cada acción en vista diferentes.
+Se deberá incluir logs tanto en el servidor como en el cliente para visualizar cómo funciona el
+flujo de autenticación con JWT.
+Ejercicio Guiado
+1. JSON Web Token (JWT): ○ Qué es un token JWT, sus partes
+(Header, Payload, Signature). ○ Cómo se genera y verifica. ○ Diferencia entre Access Token y
+Refresh Token.
+2. Autenticación con JWT en microservicios: ○ Inicio de sesión y validación de
+credenciales. ○ Emisión de un JWT firmado. ○ Almacenamiento del JWT en el
+cliente. ○ Envío del JWT en las cabeceras
+Authorization: Bearer.
+3. CORS (Cross-Origin Resource Sharing): ○ Por qué es necesario al consumir un
+API desde otra aplicación web en un
+dominio distinto.
+4. Flask y Flask-MySQLdb:
+○ Conexión a MariaDB desde Flask.
+○ Endpoints para registrar usuarios,
+iniciar sesión y acceder a recursos
+protegidos.
+5. Cliente Web (HTML + CSS + JS):
+○ Uso de fetch para consumir APIs.
+○ Almacenamiento de tokens en
+localStorage.
+○ Manejo de errores y logs en consola.
+6. Logs:
+○ Logs en el servidor para ver emisión,
+validación y expiración de tokens.
+Logs en el cliente para cada request
+y respuesta.
+
+Ejercicio Guiado
+Pasos a realizar
+1. Configuración de la Base de Datos
+● Crear una base de datos llamada JWT en MariaDB.
+● Crear las tablas users e items con la estructura base.
+● Asegurarse de tener un usuario en MariaDB con permisos para conectarse desde Flask.
+2. Desarrollo del Microservicio Flask
+● Implementar un microservicio en Flask que:
+○ Permita registrar usuarios con contraseña cifrada.
+○ Permita iniciar sesión y devuelva un JWT válido.
+○ Genere Access Token y Refresh Token. ○ Incluya un decorador @jwt_required para proteger rutas.
+○ Exporte endpoints como:
+■ /auth/register (registro)
+■ /auth/login (login y generación de JWT)
+■ /auth/refresh (nuevo access token desde refresh token)
+■ /api/profile (devuelve información del usuario autenticado)
+■ /api/items (listar y crear items del usuario autenticado)
+○ Incluya logs en consola mostrando intentos de login, emisión de tokens, accesos
+correctos e intentos fallidos.
+
+Ejercicio Guiado
+3. Desarrollo de la Aplicación Web Cliente
+● Crear una aplicación con los archivos:
+○ index.html
+○ style.css
+○ app.js
+● Implementar:
+○ Un formulario para ingresar credenciales.
+○ Botones para:
+■ Registrar usuario.
+■ Iniciar sesión.
+■ Refrescar token.
+■ Acceder a /api/profile.
+■ Crear y listar items.
+○ Guardar tokens en localStorage.
+○ Guardar con un botón, la ip, puerto y endpoints del servicios de microservicios
+○ Enviar tokens en la cabecera Authorization: Bearer.
+○ Mostrar logs en consola y en pantalla con los resultados de cada reques
+4. Pruebas
+● Levantar el microservicio Flask en una instancia y colectar IP y puerto.
+● Levantar la aplicación web en su máquina personal.
+● Probar el flujo completo:
+○ Registro → Login → Obtener Access y Refresh → Guardar tokens → Acceder a
+recursos protegidos.
+● Verificar en los logs del servidor y los logs del cliente cómo se valida el JWT en cada
+paso.
+
+okay manten esto simple síguelo al pie de la letra, pero recuerda se simple
+
